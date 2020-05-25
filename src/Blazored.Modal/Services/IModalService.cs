@@ -5,68 +5,98 @@ namespace Blazored.Modal.Services
 {
     public interface IModalService
     {
-        /// <summary>
-        /// Shows a modal containing the specified <typeparamref name="TComponent"/>.
-        /// </summary>
-        ModalReference Show<TComponent>() where TComponent : ComponentBase;
 
         /// <summary>
-        /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="title"/> .
+        /// Shows the modal with the component type.
         /// </summary>
-        /// <param name="title">Modal title</param>
-        ModalReference Show<TComponent>(string title) where TComponent : ComponentBase;
+        public ModalReference Show<T>() where T : ComponentBase
+        {
+            return Show<T>(string.Empty, new ModalParameters(), new ModalOptions());
+        }
 
         /// <summary>
-        /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="title"/> and <paramref name="options"/>.
+        /// Shows the modal with the component type using the specified title.
         /// </summary>
-        /// <param name="title">Modal title</param>
-        /// <param name="options">Options to configure the modal</param>
-        ModalReference Show<TComponent>(string title, ModalOptions options) where TComponent : ComponentBase;
+        /// <param name="title">Modal title.</param>
+        public ModalReference Show<T>(string title) where T : ComponentBase
+        {
+            return Show<T>(title, new ModalParameters(), new ModalOptions());
+        }
 
         /// <summary>
-        /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="title"/> and <paramref name="parameters"/>.
+        /// Shows the modal with the component type using the specified title.
         /// </summary>
-        /// <param name="title">Modal title</param>
-        /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed</param>
-        ModalReference Show<TComponent>(string title, ModalParameters parameters) where TComponent : ComponentBase;
+        /// <param name="title">Modal title.</param>
+        /// <param name="options">Options to configure the modal.</param>
+        public ModalReference Show<T>(string title, ModalOptions options) where T : ComponentBase
+        {
+            return Show<T>(title, new ModalParameters(), options);
+        }
 
         /// <summary>
-        /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="title"/>,
-        /// <paramref name="parameters"/> and <paramref name="options"/>.
+        /// Shows the modal with the component type using the specified <paramref name="title"/>,
+        /// passing the specified <paramref name="parameters"/>.
+        /// </summary>
+        /// <param name="title">Modal title.</param>
+        /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
+        public ModalReference Show<T>(string title, ModalParameters parameters) where T : ComponentBase
+        {
+            return Show<T>(title, parameters, new ModalOptions());
+        }
+
+        /// <summary>
+        /// Shows the modal with the component type using the specified <paramref name="title"/>,
+        /// passing the specified <paramref name="parameters"/> and setting a custom CSS style.
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
-        ModalReference Show<TComponent>(string title, ModalParameters parameters = null, ModalOptions options = null) where TComponent : ComponentBase;
+        public ModalReference Show<T>(string title, ModalParameters parameters, ModalOptions options) where T : ComponentBase
+        {
+            return Show(typeof(T), title, parameters, options);
+        }
 
         /// <summary>
-        /// Shows a modal containing a <paramref name="component"/>.
+        /// Shows the modal with the specific component type.
         /// </summary>
-        /// <param name="component">Type of component to display.</param>
-        ModalReference Show(Type component);
+        /// <param name="contentComponent">Type of component to display.</param>
+        public ModalReference Show(Type contentComponent)
+        {
+            return Show(contentComponent, string.Empty, new ModalParameters(), new ModalOptions());
+        }
 
         /// <summary>
-        /// Shows a modal containing a <paramref name="component"/> with the specified <paramref name="title"/>.
+        /// Shows the modal with the component type using the specified title.
         /// </summary>
-        /// <param name="component">Type of component to display.</param>
+        /// <param name="contentComponent">Type of component to display.</param>
         /// <param name="title">Modal title.</param>
-        ModalReference Show(Type component, string title);
+        public ModalReference Show(Type contentComponent, string title)
+        {
+            return Show(contentComponent, title, new ModalParameters(), new ModalOptions());
+        }
 
         /// <summary>
-        /// Shows a modal containing a <paramref name="component"/> with the specified <paramref name="title"/> and <paramref name="options"/>.
+        /// Shows the modal with the component type using the specified title.
         /// </summary>
         /// <param name="title">Modal title.</param>
-        /// <param name="component">Type of component to display.</param>
+        /// <param name="contentComponent">Type of component to display.</param>
         /// <param name="options">Options to configure the modal.</param>
-        ModalReference Show(Type component, string title, ModalOptions options);
+        public ModalReference Show(Type contentComponent, string title, ModalOptions options)
+        {
+            return Show(contentComponent, title, new ModalParameters(), options);
+        }
 
         /// <summary>
-        /// Shows a modal containing a <paramref name="component"/> with the specified <paramref name="title"/> and <paramref name="parameters"/>.
+        /// Shows the modal with the component type using the specified <paramref name="title"/>,
+        /// passing the specified <paramref name="parameters"/>.
         /// </summary>
         /// <param name="title">Modal title.</param>
-        /// <param name="component">Type of component to display.</param>
+        /// <param name="contentComponent">Type of component to display.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
-        ModalReference Show(Type component, string title, ModalParameters parameters);
+        public ModalReference Show(Type contentComponent, string title, ModalParameters parameters)
+        {
+            return Show(contentComponent, title, parameters, new ModalOptions());
+        }
 
         /// <summary>
         /// Shows a modal containing a <paramref name="component"/> with the specified <paramref name="title"/>, <paramref name="parameters"/>
